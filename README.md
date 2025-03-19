@@ -29,3 +29,7 @@
 2. 为什么我糖果断网了?
 - A: 因为插件自动开启了本地代理，不打开插件糖果就无法访问网络。可以手动取消代理，如图所示
 ![](http://qiniu.apale7.cn/20250319211518.png)
+3. 糖果账号损坏
+可能是软件存在bug, 可以尝试以下恢复方式
+糖果配置文件所在的目录: %LOCALAPPDATA%\TGGAME
+打开此目录，可以看到accouts2_old.dat和accouts2.dat，删除accouts2.dat, 把accouts2_old.dat重命名为accouts2_old.dat即可恢复
