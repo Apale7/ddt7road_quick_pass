@@ -20,7 +20,15 @@ func writeTgProxyConf() error {
 	// 打开文件
 	file, err := os.Open(fPath)
 	if err != nil {
-		fmt.Println("Error opening file:", err)
+		// fmt.Println("Error opening file:", err)
+		const conf = "version=0\r\n\r\n[USERPROXY]\r\nname=免验证码\r\nip=127.0.0.1\r\nport=8888\r\nproxyType=http\r\npasswordCheck=0\r\nusername=\r\npassword=\r\nisActive=1\r\n\r\n[PROXYOVERRIDE]\r\nproxy_override=\r\n\r\n[PROXYTYPE]\r\nproxy_type=2"
+		err = writeFileWithUTF16LE(fPath, conf)
+		if err != nil {
+			fmt.Println("Error writing file:", err)
+			return nil
+		}
+
+		logrus.Println("代理配置已成功写入文件")
 		return err
 	}
 	defer file.Close()

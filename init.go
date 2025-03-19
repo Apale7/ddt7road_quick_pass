@@ -6,7 +6,7 @@ func init() {
 	InitAccounts()
 
 	gf := readConf()
-	addUrlParams(gf)
+	editConf(gf)
 	err := saveConf(gf)
 	if err != nil {
 		panic(err)

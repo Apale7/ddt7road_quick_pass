@@ -187,8 +187,8 @@ func saveConf(gameForms []GameForm) error {
 	return nil
 }
 
-// 在url后面添加username和pwd参数
-func addUrlParams(gameForms []GameForm) {
+// 在url后面添加username
+func editConf(gameForms []GameForm) {
 	for i, form := range gameForms {
 		u := gameForms[i].URL[1 : len(gameForms[i].URL)-1]
 		if strings.Contains(u, "username=") { // 已经处理好了
