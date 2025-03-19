@@ -47,7 +47,11 @@ func main() {
 
 			// 从url解析出username和password
 			username := u.Query().Get("username")
-			password := u.Query().Get("pwd")
+			password, ok := accountMap[username]
+			if !ok {
+				logrus.Println("未知账号")
+			}
+			// password := u.Query().Get("pwd")
 			// password做base64反解码
 			passwordBytes, err := base64.StdEncoding.DecodeString(password)
 			if err != nil {
