@@ -1,1 +1,1 @@
-go build -ldflags="-s -w" -o ç³–æœå…éªŒè¯ç ç™»å½•.exe
+go build -ldflags="-s -w" -o ÌÇ¹ûÃâÑéÖ¤ÂëµÇÂ¼.exe
