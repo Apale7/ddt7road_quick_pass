@@ -4,8 +4,8 @@ import "github.com/sirupsen/logrus"
 
 var accountMap map[string]string // key是username,value是pwd
 
-func init() {
-	InitAccounts()
+func Init() {
+	InitTangoConfDir()
 
 	gf := readConf()
 	editConf(gf)

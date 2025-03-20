@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/go-ini/ini"
+	"github.com/sirupsen/logrus"
 	"golang.org/x/text/encoding/unicode"
 	"golang.org/x/text/transform"
 )
@@ -44,17 +45,28 @@ func isFileExist(path string) bool {
 	return false
 }
 
-func InitAccounts() {
-	localAppData := os.Getenv("LOCALAPPDATA")
-	if localAppData == "" {
-		fmt.Println("无法找到 LOCALAPPDATA 环境变量")
-		return
+func InitTangoConfDir() {
+	if !isFileExist("./tgConfDir.txt") {
+		fmt.Printf("首次使用, 请输入糖果用户数据目录(点击糖果右上角工具-糖果游戏浏览器选秀-高级选项 查看):\n")
+		fmt.Scanln(&tgConfDir)
+
+		err := os.WriteFile("./tgConfDir.txt", []byte(tgConfDir), 0o644)
+		if err != nil {
+			logrus.Errorf("保存糖果用户数据目录失败: %v", err)
+		}
+	} else {
+		bs, err := os.ReadFile("./tgConfDir.txt")
+		if err != nil {
+			logrus.Errorf("读取糖果用户数据目录失败: %v", err)
+			fmt.Println("按任意键退出...")
+			fmt.Scanln()
+			panic(err)
+		}
+
+		tgConfDir = string(bs)
 	}
 
-	probablyConfDir := filepath.Join(localAppData, "TGGAME")
-	if isFileExist(filepath.Join(probablyConfDir, "accouts2.dat")) { // 糖果的配置文件可能在C根目录 也可能在Local文件夹
-		tgConfDir = probablyConfDir
-	}
+	logrus.Println("糖果用户数据目录:", tgConfDir)
 }
 
 func readConf() []GameForm {

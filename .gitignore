@@ -27,3 +27,4 @@ accounts/
 start*.go
 使用教程*
 *.7z
+tgConfDir.txt

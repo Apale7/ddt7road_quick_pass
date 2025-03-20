@@ -13,6 +13,7 @@ import (
 )
 
 func main() {
+	Init()
 	verbose := flag.Bool("v", false, "should every proxy request be logged to stdout")
 	addr := flag.String("addr", ":8888", "proxy listen address")
 	flag.Parse()
