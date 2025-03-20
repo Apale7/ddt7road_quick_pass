@@ -25,7 +25,24 @@ type GameForm struct {
 	LoginNum  int
 }
 
-var tgConfDir string
+var tgConfDir string = `C:\TGGAME`
+
+func isFileExist(path string) bool {
+	// 使用 os.Stat 检查文件是否存在
+	_, err := os.Stat(path)
+	if err == nil {
+		// 文件存在
+		return true
+	}
+
+	// 如果是其他错误（如权限问题），打印错误信息
+	if !os.IsNotExist(err) {
+		fmt.Printf("Error checking file: %v\n", err)
+	}
+
+	// 文件不存在
+	return false
+}
 
 func InitAccounts() {
 	localAppData := os.Getenv("LOCALAPPDATA")
@@ -34,8 +51,10 @@ func InitAccounts() {
 		return
 	}
 
-	tgConfDir = filepath.Join(localAppData, "TGGAME")
-	// logrus.Println(tgConfDir)
+	probablyConfDir := filepath.Join(localAppData, "TGGAME")
+	if isFileExist(filepath.Join(probablyConfDir, "accouts2.dat")) { // 糖果的配置文件可能在C根目录 也可能在Local文件夹
+		tgConfDir = probablyConfDir
+	}
 }
 
 func readConf() []GameForm {
@@ -191,11 +210,11 @@ func saveConf(gameForms []GameForm) error {
 func editConf(gameForms []GameForm) {
 	for i, form := range gameForms {
 		u := gameForms[i].URL[1 : len(gameForms[i].URL)-1]
-		if strings.Contains(u, "username=") { // 已经处理好了
+		if strings.Contains(u, "username=") || !strings.Contains(u, "www.wan.com") { // 已经处理好了
 			continue
 		}
 
-		u = fmt.Sprintf("%s?username=%s", u, form.Username)
+		u = fmt.Sprintf("%s?username=%s", "http://www.wan.com/game/play/id/8665.html", form.Username)
 		gameForms[i].URL = fmt.Sprintf("{%s}", u)
 		// fmt.Printf("  URL: %s\n", gameForms[i].URL)
 	}

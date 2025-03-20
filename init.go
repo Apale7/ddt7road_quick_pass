@@ -1,5 +1,7 @@
 package main
 
+import "github.com/sirupsen/logrus"
+
 var accountMap map[string]string // key是username,value是pwd
 
 func init() {
@@ -9,7 +11,8 @@ func init() {
 	editConf(gf)
 	err := saveConf(gf)
 	if err != nil {
-		panic(err)
+		logrus.Println(err)
+		return
 	}
 
 	accountMap = make(map[string]string, len(gf))
